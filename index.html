@@ -8,8 +8,8 @@
     <style>
         body {
             margin: 0; padding: 0;
-            /* แก้ไข: ใช้ไฟล์ photo11.png เป็นพื้นหลัง ล็อกห้ามขยับ ห้ามเลื่อน และไม่ให้ซูม */
-            background: url('photo11.png') no-repeat center center fixed;
+            /* แก้ไข: ใช้ไฟล์ photo11.jpg เป็นพื้นหลัง ล็อกห้ามขยับ ห้ามเลื่อน และไม่ให้ซูม */
+            background: url('photo11.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Prompt', sans-serif;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -19,16 +19,19 @@
             position: relative;
         }
 
+        /* ปรับอนิเมชันอีโมจิเริ่มต้นให้ลอยขึ้นมาจากด้านล่างแบบต่อเนื่อง ไม่ค้างกลางจอ */
         .butterfly {
-            position: absolute; width: 20px; height: 20px;
-            pointer-events: none; z-index: 1; font-size: 20px;
-            animation: flying 12s linear infinite;
+            position: absolute; width: 25px; height: 25px;
+            pointer-events: none; z-index: 1; font-size: 22px;
+            bottom: -30px;
+            animation: flyingUp 6s linear infinite;
+            opacity: 0;
         }
-        @keyframes flying {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translate(400px, -500px) rotate(360deg); opacity: 0; }
+        @keyframes flyingUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { transform: translateY(-105vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
         #status-text { 
@@ -223,17 +226,18 @@
             }, { once: true });
         });
 
+        // สร้างอีโมจิลอยขึ้นมาอย่างต่อเนื่องตั้งแต่เริ่มต้น
         function createButterflies() {
             const emojis = ['💜', '🤍'];
-            for(let i=0; i<12; i++) {
+            setInterval(() => {
                 const b = document.createElement('div');
                 b.className = 'butterfly';
                 b.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                b.style.left = Math.random() * 90 + 'vw';
-                b.style.top = Math.random() * 90 + 'vh';
-                b.style.animationDelay = Math.random() * 5 + 's';
+                b.style.left = (Math.random() * 90 + 5) + 'vw';
+                b.style.animationDuration = (4 + Math.random() * 3) + 's';
                 document.body.appendChild(b);
-            }
+                setTimeout(() => b.remove(), 7000);
+            }, 500);
         }
         createButterflies();
 
@@ -336,8 +340,8 @@
             const positions = [
                 {x: -100, y: -130}, {x: 0, y: -140}, {x: 100, y: -130},
                 {x: -110, y: -30},                     {x: 110, y: -30},  
-                {x: -110, y: 70},                      {x: 110, y: 70},   
-                {x: -90, y: 140},   {x: 0, y: 150},  {x: 90, y: 140}   
+                {x: -110, y: 70},                       {x: 110, y: 70},   
+                {x: -90, y: 140},    {x: 0, y: 150},  {x: 90, y: 140}   
             ];
 
             for (let i = positions.length - 1; i > 0; i--) {
@@ -389,7 +393,7 @@
             const container = document.getElementById('photo-viewer').style.display === 'flex' ? 
                 document.getElementById('photo-viewer') : document.getElementById('overlay');
             
-            const emojis = ['💜','🤍',];
+            const emojis = ['💜','🤍'];
             
             function spawn() {
                 const el = document.createElement('div');
