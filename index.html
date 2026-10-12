@@ -18,14 +18,20 @@
             -webkit-overflow-scrolling: none;
             user-select: none;
             -webkit-user-select: none;
-        }
-
-        body {
-            /* ใช้ไฟล์ photo11.jpg เป็นพื้นหลัง ล็อกนิ่งสนิทเต็มจอ */
-            background: url('photo11.jpg') no-repeat center center fixed;
-            background-size: cover;
             font-family: 'Prompt', sans-serif;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background-color: #f4ecf7; /* สีสำรองกรณีรูปโหลด */
+        }
+
+        /* ชั้นสำหรับล็อกรูปพื้นหลัง photo11.jpg ให้แสดงผลได้สมบูรณ์ทั้งคอมและมือถือ */
+        #bg-img {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .butterfly {
@@ -111,7 +117,6 @@
             transition: background-color 0.5s ease;
         }
 
-        /* ขยายกรอบรูปให้ใหญ่ขึ้น เต็มตา และพอดีหน้าจอ */
         .view-card {
             width: 88vw; max-width: 360px;
             max-height: 85vh;
@@ -158,7 +163,6 @@
             transition: background-color 0.5s ease;
         }
 
-        /* ขยายกรอบจดหมายให้ใหญ่ขึ้นเต็มตา */
         #note-container {
             position: relative;
             display: flex;
@@ -215,6 +219,9 @@
     </style>
 </head>
 <body>
+
+    <!-- รูปพื้นหลังแบบแท็ก HTML เพื่อให้มือถือทุกรุ่นแสดงผลขึ้นชัวร์ 100% -->
+    <img id="bg-img" src="photo11.jpg" alt="Background">
 
     <audio id="bg-music" src="song.mp3" loop autoplay></audio>
 
