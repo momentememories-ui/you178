@@ -2,24 +2,32 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Happy Anniversary ♡</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* ล็อกไม่ให้หน้าจอทั้งหมดเลื่อน ขยับ หรือซูมได้เด็ดขาด */
+        html, body {
             margin: 0; padding: 0;
-            /* แก้ไข: ใช้ไฟล์ photo11.jpg เป็นพื้นหลัง ล็อกห้ามขยับ ห้ามเลื่อน และไม่ให้ซูม */
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden !important;
+            position: fixed; /* ล็อกตำแหน่งหน้าจอสำหรับมือถือทุกรุ่น */
+            top: 0; left: 0; right: 0; bottom: 0;
+            touch-action: none !important; /* ห้ามเลื่อน/ขยับ/ซูมด้วยนิ้ว */
+            -webkit-overflow-scrolling: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            /* ล็อกไฟล์ photo11.jpg เป็นพื้นหลัง ห้ามขยับ */
             background: url('photo11.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Prompt', sans-serif;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden;
-            touch-action: none;
-            user-select: none;
-            position: relative;
         }
 
-        /* ปรับอนิเมชันอีโมจิเริ่มต้นให้ลอยขึ้นมาจากด้านล่างแบบต่อเนื่อง ไม่ค้างกลางจอ */
         .butterfly {
             position: absolute; width: 25px; height: 25px;
             pointer-events: none; z-index: 1; font-size: 22px;
@@ -35,7 +43,6 @@
         }
 
         #status-text { 
-            /* ปรับโทนสีตัวหนังสือให้เข้ากับธีมม่วง-ขาว */
             color: #4a235a; font-size: 1rem; margin-bottom: 20px; 
             z-index: 10; text-align: center; width: 85%;
             text-shadow: 1px 1px 3px rgba(255,255,255,0.9);
@@ -54,7 +61,6 @@
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* อนิเมชันสำหรับสั่นช่อดอกไม้เพื่อดึงดูดสายตา */
         @keyframes bouquetWobble {
             0% { transform: scale(1.15) rotate(0deg); }
             25% { transform: scale(1.18) rotate(-3deg); }
@@ -104,18 +110,34 @@
             justify-content: center; align-items: center; z-index: 300;
             transition: background-color 0.5s ease;
         }
+
+        /* ปรับกรอบแสดงรูปให้พอดีหน้าจอ ห้ามซูม ห้ามล้น */
         .view-card {
-            width: 75%; max-width: 260px;
-            background: #ffffff; padding: 10px 10px 20px 10px;
+            width: 80%; max-width: 300px;
+            max-height: 80vh;
+            background: #ffffff; padding: 12px;
             box-shadow: 0 20px 50px rgba(74,35,90,0.4);
             position: absolute;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: center center;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 2px solid #e8daef;
+            display: flex; flex-direction: column; align-items: center;
+            box-sizing: border-box;
         }
-        .view-card img { width: 100%; height: auto; display: block; margin-bottom: 12px; border-radius: 4px; }
-        .view-caption { text-align: center; color: #4a235a; font-size: 0.85rem; font-weight: 600; }
+
+        .view-card img { 
+            width: 100%; 
+            max-height: 55vh; 
+            object-fit: contain; 
+            display: block; 
+            border-radius: 6px; 
+        }
+
+        .view-caption { 
+            text-align: center; color: #4a235a; font-size: 0.85rem; font-weight: 600; 
+            margin-top: 10px; word-break: break-word;
+        }
 
         #touch-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; cursor: pointer; }
         #watering-can-img { position: fixed; width: 80px; height: 80px; pointer-events: none; display: none; z-index: 100; transform: rotate(-20deg); }
@@ -135,16 +157,25 @@
             justify-content: center; align-items: center; z-index: 400;
             transition: background-color 0.5s ease;
         }
-        #note-img-display {
-            width: 95%; 
-            max-width: 450px; 
-            height: auto;
-            position: absolute;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: center center;
+
+        /* ปรับกรอบจดหมายให้พอดีหน้าจอ */
+        #note-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 90vw;
+            max-height: 80vh;
         }
 
-        /* เพิ่มปุ่มปิด (Close Button) สไตล์โทนม่วงขาว */
+        #note-img-display {
+            max-width: 90vw; 
+            max-height: 75vh; 
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
         .close-btn {
             position: absolute;
             top: -12px;
@@ -162,7 +193,7 @@
             align-items: center;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 310;
+            z-index: 410;
             transition: transform 0.2s ease, background 0.2s ease;
         }
         .close-btn:hover {
@@ -170,7 +201,6 @@
             transform: scale(1.1);
         }
 
-        /* ปรับอนิเมชันอีโมจิให้กระจายทั่วจอและลอยช้าลงอย่างนุ่มนวล */
         .pop-emoji {
             position: fixed; pointer-events: none; z-index: 350; font-size: 24px;
             animation: floatUpEmoji 4.5s ease-out forwards; opacity: 0;
@@ -187,7 +217,7 @@
 
     <audio id="bg-music" src="song.mp3" loop autoplay></audio>
 
-    <h1 id="status-text">เธอช่วยรดน้ำให้ต้นไม้ต้นนี้หน่อยนะ🌱</h1>
+    <h1 id="status-text">หนูช่วยรดน้ำให้ต้นไม้ต้นนี้หน่อยนะคะ🌱</h1>
 
     <div id="plant-container">
         <img id="main-plant-img" src="stage1.png">
@@ -208,13 +238,17 @@
     </div>
 
     <div id="overlay" onclick="closeNote()">
-        <div style="position: relative; display: inline-block;" onclick="event.stopPropagation()">
-            <div class="close-btn" style="top: 10px; right: 10px;" onclick="closeNote()">×</div>
-            <img id="note-img-display" src="note.png" style="position: static; transform: none;">
+        <div id="note-container" onclick="event.stopPropagation()">
+            <div class="close-btn" style="top: -10px; right: -10px;" onclick="closeNote()">×</div>
+            <img id="note-img-display" src="note.png">
         </div>
     </div>
 
     <script>
+        // ป้องกัน Gesture ซูม/ขยับหน้าจอบน Safari/iOS
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+        document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+
         window.addEventListener('DOMContentLoaded', () => {
             const music = document.getElementById('bg-music');
             music.play().catch(e => {
@@ -226,7 +260,6 @@
             }, { once: true });
         });
 
-        // สร้างอีโมจิลอยขึ้นมาอย่างต่อเนื่องตั้งแต่เริ่มต้น
         function createButterflies() {
             const emojis = ['💜', '🤍'];
             setInterval(() => {
@@ -246,14 +279,7 @@
         let isBouquetStage = false;
         
         const captions = [
-            "", 
-            "", 
-            "", 
-            "", 
-            "", 
-            "", 
-            "", 
-            ""
+            "", "", "", "", "", "", "", ""
         ];
 
         const statusText = document.getElementById('status-text');
@@ -340,7 +366,7 @@
             const positions = [
                 {x: -100, y: -130}, {x: 0, y: -140}, {x: 100, y: -130},
                 {x: -110, y: -30},                     {x: 110, y: -30},  
-                {x: -110, y: 70},                       {x: 110, y: 70},   
+                {x: -110, y: 70},                      {x: 110, y: 70},   
                 {x: -90, y: 140},    {x: 0, y: 150},  {x: 90, y: 140}   
             ];
 
@@ -349,7 +375,6 @@
                 [positions[i], positions[j]] = [positions[j], positions[i]];
             }
 
-            // แสดงเฉพาะรูป 8 รูป (photo1.jpg ถึง photo8.jpg) และกล่องจดหมาย
             for (let i = 0; i < 8; i++) {
                 const img = document.createElement('img');
                 img.src = `photo${i+1}.jpg`;
@@ -363,8 +388,6 @@
                 const jitterY = (Math.random() - 0.5) * 15;
                 const finalX = pos.x + jitterX;
                 const finalY = pos.y + jitterY;
-                
-                // สุ่มมุมเอียงระหว่าง -15 ถึง +15 องศา ให้ภาพเอียงเล็กน้อย
                 const rotate = (Math.random() - 0.5) * 30;
 
                 setTimeout(() => {
@@ -399,7 +422,6 @@
                 const el = document.createElement('div');
                 el.className = 'pop-emoji';
                 el.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                // กระจายตำแหน่งเกิดทั่วหน้าจอ (10vw ถึง 90vw)
                 el.style.left = (Math.random() * 80 + 10) + 'vw';
                 el.style.setProperty('--x-move', ((Math.random() - 0.5) * 120) + 'px');
                 container.appendChild(el);
@@ -472,13 +494,14 @@
         function openNote(element) {
             currentOriginElement = element;
             const overlay = document.getElementById('overlay');
-            const noteDisplay = document.getElementById('note-img-display');
+            const noteDisplay = document.getElementById('note-container');
             
             const rect = element.getBoundingClientRect();
             const startLeft = rect.left + (rect.width / 2);
             const startTop = rect.top + (rect.height / 2);
             
             noteDisplay.style.transition = 'none';
+            noteDisplay.style.position = 'absolute';
             noteDisplay.style.left = startLeft + 'px';
             noteDisplay.style.top = startTop + 'px';
             noteDisplay.style.transform = 'translate(-50%, -50%) scale(0.1)';
@@ -500,7 +523,7 @@
         function closeNote() {
             stopEmojiBurst();
             const overlay = document.getElementById('overlay');
-            const noteDisplay = document.getElementById('note-img-display');
+            const noteDisplay = document.getElementById('note-container');
             
             if (currentOriginElement) {
                 const rect = currentOriginElement.getBoundingClientRect();
