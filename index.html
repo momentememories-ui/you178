@@ -20,10 +20,10 @@
             -webkit-user-select: none;
             font-family: 'Prompt', sans-serif;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-color: #f4ecf7; /* สีสำรองกรณีรูปโหลด */
+            background-color: #f4ecf7;
         }
 
-        /* ชั้นสำหรับล็อกรูปพื้นหลัง photo11.jpg ให้แสดงผลได้สมบูรณ์ทั้งคอมและมือถือ */
+        /* รูปพื้นหลัง photo11.jpg บังคับล็อกนิ่งสนิทเต็มจอ */
         #bg-img {
             position: fixed;
             top: 0; left: 0;
@@ -121,7 +121,7 @@
             width: 88vw; max-width: 360px;
             max-height: 85vh;
             background: #ffffff; padding: 14px 14px 18px 14px;
-            box-shadow: 0 20px 50px rgba(74,35,90,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: absolute;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: center center;
@@ -163,18 +163,19 @@
             transition: background-color 0.5s ease;
         }
 
+        /* ขยายกรอบข้อความ Note เพิ่มขึ้นอีก 20% */
         #note-container {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            max-width: 95vw;
-            max-height: 88vh;
+            max-width: 98vw;
+            max-height: 92vh;
         }
 
         #note-img-display {
-            max-width: 92vw; 
-            max-height: 82vh; 
+            max-width: 98vw; 
+            max-height: 88vh; 
             width: auto;
             height: auto;
             object-fit: contain;
@@ -220,7 +221,6 @@
 </head>
 <body>
 
-    <!-- รูปพื้นหลังแบบแท็ก HTML เพื่อให้มือถือทุกรุ่นแสดงผลขึ้นชัวร์ 100% -->
     <img id="bg-img" src="photo11.jpg" alt="Background">
 
     <audio id="bg-music" src="song.mp3" loop autoplay></audio>
@@ -464,7 +464,7 @@
             viewer.style.display = 'flex';
             
             setTimeout(() => {
-                viewer.style.backgroundColor = 'rgba(74,35,90,0.75)';
+                viewer.style.backgroundColor = 'rgba(0,0,0,0.75)';
                 card.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                 card.style.left = '50%';
                 card.style.top = '50%';
@@ -517,11 +517,11 @@
             overlay.style.display = 'flex';
             
             setTimeout(() => {
-                overlay.style.backgroundColor = 'rgba(74,35,90,0.85)';
+                overlay.style.backgroundColor = 'rgba(0,0,0,0.85)';
                 noteDisplay.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                 noteDisplay.style.left = '50%';
                 noteDisplay.style.top = '50%';
-                noteDisplay.style.transform = 'translate(-50%, -50%) scale(1)';
+                noteDisplay.style.transform = 'translate(-50%, -50%) scale(1.2)';
                 noteDisplay.style.opacity = '1';
                 startEmojiBurst();
             }, 20);
