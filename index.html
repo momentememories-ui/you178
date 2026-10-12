@@ -12,16 +12,16 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden !important;
-            position: fixed; /* ล็อกตำแหน่งหน้าจอสำหรับมือถือทุกรุ่น */
+            position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            touch-action: none !important; /* ห้ามเลื่อน/ขยับ/ซูมด้วยนิ้ว */
+            touch-action: none !important;
             -webkit-overflow-scrolling: none;
             user-select: none;
             -webkit-user-select: none;
         }
 
         body {
-            /* ล็อกไฟล์ photo11.jpg เป็นพื้นหลัง ห้ามขยับ */
+            /* ใช้ไฟล์ photo11.jpg เป็นพื้นหลัง ล็อกนิ่งสนิทเต็มจอ */
             background: url('photo11.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Prompt', sans-serif;
@@ -111,11 +111,11 @@
             transition: background-color 0.5s ease;
         }
 
-        /* ปรับกรอบแสดงรูปให้พอดีหน้าจอ ห้ามซูม ห้ามล้น */
+        /* ขยายกรอบรูปให้ใหญ่ขึ้น เต็มตา และพอดีหน้าจอ */
         .view-card {
-            width: 80%; max-width: 300px;
-            max-height: 80vh;
-            background: #ffffff; padding: 12px;
+            width: 88vw; max-width: 360px;
+            max-height: 85vh;
+            background: #ffffff; padding: 14px 14px 18px 14px;
             box-shadow: 0 20px 50px rgba(74,35,90,0.4);
             position: absolute;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -128,15 +128,15 @@
 
         .view-card img { 
             width: 100%; 
-            max-height: 55vh; 
+            max-height: 65vh; 
             object-fit: contain; 
             display: block; 
             border-radius: 6px; 
         }
 
         .view-caption { 
-            text-align: center; color: #4a235a; font-size: 0.85rem; font-weight: 600; 
-            margin-top: 10px; word-break: break-word;
+            text-align: center; color: #4a235a; font-size: 0.95rem; font-weight: 600; 
+            margin-top: 12px; word-break: break-word;
         }
 
         #touch-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; cursor: pointer; }
@@ -158,35 +158,36 @@
             transition: background-color 0.5s ease;
         }
 
-        /* ปรับกรอบจดหมายให้พอดีหน้าจอ */
+        /* ขยายกรอบจดหมายให้ใหญ่ขึ้นเต็มตา */
         #note-container {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            max-width: 90vw;
-            max-height: 80vh;
+            max-width: 95vw;
+            max-height: 88vh;
         }
 
         #note-img-display {
-            max-width: 90vw; 
-            max-height: 75vh; 
+            max-width: 92vw; 
+            max-height: 82vh; 
             width: auto;
             height: auto;
             object-fit: contain;
+            border-radius: 12px;
         }
 
         .close-btn {
             position: absolute;
-            top: -12px;
-            right: -12px;
-            width: 32px;
-            height: 32px;
+            top: -14px;
+            right: -14px;
+            width: 36px;
+            height: 36px;
             background: #8e44ad;
             color: #fff;
             border: 2px solid #ffffff;
             border-radius: 50%;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             display: flex;
             justify-content: center;
@@ -217,7 +218,7 @@
 
     <audio id="bg-music" src="song.mp3" loop autoplay></audio>
 
-    <h1 id="status-text">หนูช่วยรดน้ำให้ต้นไม้ต้นนี้หน่อยนะคะ🌱</h1>
+    <h1 id="status-text">เธอช่วยรดน้ำให้ต้นไม้ต้นนี้หน่อยนะ🌱</h1>
 
     <div id="plant-container">
         <img id="main-plant-img" src="stage1.png">
@@ -239,13 +240,12 @@
 
     <div id="overlay" onclick="closeNote()">
         <div id="note-container" onclick="event.stopPropagation()">
-            <div class="close-btn" style="top: -10px; right: -10px;" onclick="closeNote()">×</div>
+            <div class="close-btn" style="top: -12px; right: -12px;" onclick="closeNote()">×</div>
             <img id="note-img-display" src="note.png">
         </div>
     </div>
 
     <script>
-        // ป้องกัน Gesture ซูม/ขยับหน้าจอบน Safari/iOS
         document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
         document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
 
