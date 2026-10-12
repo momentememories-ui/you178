@@ -163,7 +163,6 @@
             transition: background-color 0.5s ease;
         }
 
-        /* ขยายกรอบข้อความ Note เพิ่มขึ้นอีก 20% */
         #note-container {
             position: relative;
             display: flex;
@@ -521,7 +520,8 @@
                 noteDisplay.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                 noteDisplay.style.left = '50%';
                 noteDisplay.style.top = '50%';
-                noteDisplay.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                /* ลดขนาด scale ลง 10% จาก 1.2 เหลือ 1.08 */
+                noteDisplay.style.transform = 'translate(-50%, -50%) scale(1.08)';
                 noteDisplay.style.opacity = '1';
                 startEmojiBurst();
             }, 20);
